@@ -1,0 +1,6 @@
+config\CrossOriginFilter.class
+painelgm\back\end\ListaEventosService.class
+painelgm\back\end\EventoService.class
+config\ApplicationConfig.class
+painelgm\back\end\ListaEventos.class
+painelgm\back\end\Evento.class
