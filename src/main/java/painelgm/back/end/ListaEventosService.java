@@ -29,13 +29,31 @@ import java.util.List;
 /**
  * @author goga
  */
-@Stateless
+
+/*
+
+
+
+
+
+Transferir todos os métodos abaixo para ListaEventosRestService.java
+
+
+
+
+
+
+
+
+ */
+
+/*@Stateless
 @Path("listaeventos")
 @Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)*/
 public class ListaEventosService {
 
-    @PersistenceContext(unitName = "PainelgmPU")
+    /*@PersistenceContext(unitName = "PainelgmPU")
     private EntityManager entityManager;
 
     @Inject
@@ -89,5 +107,5 @@ public class ListaEventosService {
         query.setParameter("id", id);
         List<Evento> eventosTemp = query.getResultList();
         return eventosTemp;
-    }
+    }*/
 }

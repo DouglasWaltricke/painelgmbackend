@@ -26,13 +26,30 @@ import java.util.List;
  * @author goga
  */
 
-@Stateless
+/*
+
+
+
+
+
+Transferir todos os métodos abaixo para EventoRestService.java
+
+
+
+
+
+
+
+
+ */
+
+/*@Stateless
 @Path("eventos")
 @Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)*/
 public class EventoService {
 
-    @PersistenceContext(unitName = "PainelgmPU")
+    /*@PersistenceContext(unitName = "PainelgmPU")
     private EntityManager entityManager;
 
     public EventoService() {
@@ -76,5 +93,5 @@ public class EventoService {
     @Path("{id}")
     public Evento getEvento(@PathParam("id") Integer id) {
         return entityManager.find(Evento.class, id);
-    }
+    }*/
 }

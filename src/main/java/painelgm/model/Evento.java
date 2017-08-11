@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +27,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "eventos", schema = "public")
 public class Evento implements Serializable {
@@ -39,5 +42,6 @@ public class Evento implements Serializable {
     private String printUrl;
 
     @ManyToOne
+    @JsonIgnore
     private ListaEventos listaEventos;
 }

@@ -42,4 +42,10 @@ public class ListaEventos implements Serializable {
             mappedBy = "listaEventos",
             orphanRemoval = true)
     private List<Evento> eventos;
+
+    public void associar() {
+        for (Evento evento : eventos) {
+            evento.setListaEventos(this);
+        }
+    }
 }

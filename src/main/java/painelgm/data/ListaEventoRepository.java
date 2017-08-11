@@ -5,6 +5,7 @@ import painelgm.model.ListaEventos;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @ApplicationScoped
 public class ListaEventoRepository {
@@ -13,6 +14,13 @@ public class ListaEventoRepository {
     private EntityManager em;
 
     public ListaEventos findById(Long id) {
-        return em.find(ListaEventos.class, id);
+        return em.createQuery("select le from ListaEventos le left join fetch le.eventos where le.id = :id", ListaEventos.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
+    public List<ListaEventos> findAll() {
+        return em.createQuery("select le from ListaEventos le left join fetch le.eventos", ListaEventos.class)
+                .getResultList();
     }
 }
