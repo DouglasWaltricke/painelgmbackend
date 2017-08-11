@@ -5,7 +5,12 @@
  */
 package painelgm.back.end;
 
+import painelgm.model.Evento;
+import painelgm.model.ListaEventos;
+import painelgm.service.ListaEventoService;
+
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -33,8 +38,10 @@ public class ListaEventosService {
     @PersistenceContext(unitName = "PainelgmPU")
     private EntityManager entityManager;
 
-    public ListaEventosService() {
+    @Inject
+    private ListaEventoService listaEventoService;
 
+    public ListaEventosService() {
     }
 
     @GET
@@ -45,20 +52,15 @@ public class ListaEventosService {
 
     @POST
     public ListaEventos adicionar(ListaEventos listaEventos) {
-
-        ListaEventos listaEventosTemp = entityManager.merge(listaEventos);
-        for (Evento evento : listaEventos.getEventos()) {
-            evento.setListaEventos(listaEventosTemp);
-            entityManager.persist(evento);
-        }
-        return listaEventosTemp;
+        listaEventoService.cadastrarListaEvento(listaEventos);
+        return listaEventos;
     }
 
     @PUT
     @Path("{id}")
     public ListaEventos atualizar(@PathParam("id") Integer id, ListaEventos listaEventosAtualizada) {
         ListaEventos listaEventosEncontrada = getListaEventos(id);
-        listaEventosEncontrada.setNickGM(listaEventosAtualizada.getNickGM());
+        listaEventosEncontrada.setGameMaster(listaEventosAtualizada.getGameMaster());
         listaEventosEncontrada.setDataEvento(listaEventosAtualizada.getDataEvento());
         listaEventosEncontrada.setChecked(listaEventosAtualizada.isChecked());
         entityManager.merge(listaEventosEncontrada);

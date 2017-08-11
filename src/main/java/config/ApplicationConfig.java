@@ -6,13 +6,14 @@
 package config;
 
 import java.util.Set;
+import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 /**
  *
  * @author goga
  */
-@javax.ws.rs.ApplicationPath("webresources")
+@ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
 
     @Override
@@ -33,5 +34,4 @@ public class ApplicationConfig extends Application {
         resources.add(painelgm.back.end.EventoService.class);
         resources.add(painelgm.back.end.ListaEventosService.class);
     }
-    
 }

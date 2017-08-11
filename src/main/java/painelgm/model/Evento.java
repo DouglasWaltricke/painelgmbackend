@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package painelgm.back.end;
+package painelgm.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author goga
@@ -29,18 +26,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "listaeventos", schema = "public")
-public class ListaEventos implements Serializable {
+@Table(name = "eventos", schema = "public")
+public class Evento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer lista_id;
-    private String nickGM;
-    private Date dataEvento;
-    private boolean checked;
+    private Long id;
 
-    @OneToMany(mappedBy = "listaEventos")
-    @JsonIgnore
-    private List<Evento> eventos;
+    private String player;
+    private String nome;
+    private Integer premiacao;
+    private String printUrl;
 
+    @ManyToOne
+    private ListaEventos listaEventos;
 }
