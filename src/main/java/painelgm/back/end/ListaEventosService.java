@@ -5,8 +5,6 @@
  */
 package painelgm.back.end;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,9 +19,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
- *
  * @author goga
  */
 @Stateless
@@ -31,63 +29,63 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ListaEventosService {
-    
-    @PersistenceContext(unitName="PainelgmPU")
+
+    @PersistenceContext(unitName = "PainelgmPU")
     private EntityManager entityManager;
-    
-    public ListaEventosService(){
-        
+
+    public ListaEventosService() {
+
     }
-    
+
     @GET
-    public List<ListaEventos> getListaEventos(){
+    public List<ListaEventos> getListaEventos() {
         Query query = entityManager.createQuery("SELECT lista FROM ListaEventos lista");
         return query.getResultList();
     }
-    
+
     @POST
-    public ListaEventos adicionar(ListaEventos listaEventos){
-            
-            ListaEventos listaEventosTemp = entityManager.merge(listaEventos); 
-            for(Evento evento : listaEventos.getEventos()){
-                evento.setListaEventos(listaEventosTemp);
-                entityManager.persist(evento);
-            }
-            return listaEventosTemp;
-    }   
-    
+    public ListaEventos adicionar(ListaEventos listaEventos) {
+
+        ListaEventos listaEventosTemp = entityManager.merge(listaEventos);
+        for (Evento evento : listaEventos.getEventos()) {
+            evento.setListaEventos(listaEventosTemp);
+            entityManager.persist(evento);
+        }
+        return listaEventosTemp;
+    }
+
     @PUT
     @Path("{id}")
-    public ListaEventos atualizar(@PathParam("id") Integer id, ListaEventos listaEventosAtualizada){
+    public ListaEventos atualizar(@PathParam("id") Integer id, ListaEventos listaEventosAtualizada) {
         ListaEventos listaEventosEncontrada = getListaEventos(id);
         listaEventosEncontrada.setNickGM(listaEventosAtualizada.getNickGM());
         listaEventosEncontrada.setDataEvento(listaEventosAtualizada.getDataEvento());
         listaEventosEncontrada.setChecked(listaEventosAtualizada.isChecked());
         entityManager.merge(listaEventosEncontrada);
-        
+
         return listaEventosEncontrada;
     }
 
     @DELETE
     @Path("{id}")
-     public ListaEventos excluir(@PathParam("id") Integer id){
-         ListaEventos lista = getListaEventos(id);
-         entityManager.remove(lista);
-         return lista;
-     }
-     
-     @GET
-     @Path("{id}")
-     public ListaEventos getListaEventos(@PathParam("id") Integer id){
-         return entityManager.find(ListaEventos.class, id);
-     }
-     
-     @GET
-     @Path("{id}/eventos")
-     public List<Evento> getEventos(@PathParam("id") Integer id){
-         TypedQuery<Evento> query = entityManager.createQuery("select e from Evento e where e.listaEventos.id = :id",Evento.class);
-         query.setParameter("id", id);
-         List<Evento> eventosTemp = query.getResultList();
-         return eventosTemp;
-     }
+    public ListaEventos excluir(@PathParam("id") Integer id) {
+        ListaEventos lista = getListaEventos(id);
+        entityManager.remove(lista);
+        return lista;
+    }
+
+    @GET
+    @Path("{id}")
+    public ListaEventos getListaEventos(@PathParam("id") Integer id) {
+        return entityManager.find(ListaEventos.class, id);
+    }
+
+    @GET
+    @Path("{id}/eventos")
+    public List<Evento> getEventos(@PathParam("id") Integer id) {
+        TypedQuery<Evento> query = entityManager.createQuery("select e from Evento e where e.listaEventos.id = :id", Evento.class);
+        query.setParameter("id", id);
+        List<Evento> eventosTemp = query.getResultList();
+        return eventosTemp;
+    }
 }
