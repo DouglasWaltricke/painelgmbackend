@@ -33,6 +33,5 @@ public class ApplicationConfig extends Application {
         resources.add(config.CrossOriginFilter.class);
         resources.add(painelgm.rest.EventoRestService.class);
         resources.add(painelgm.rest.ListaEventoRestService.class);
-        resources.add(painelgm.rest.UsuarioRestService.class);
     }
 }
