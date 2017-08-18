@@ -49,23 +49,24 @@ public class UsuarioRestService {
         return usuario;
     }
     
-   @DELETE
-   @Path("{id}")
-    public Long excluir(@PathParam("id") Long id){
-        usuarioRepository.excluir(id);
-        return id;
-      }
-   
-    @GET
+    @DELETE
     @Path("{id}")
-    public Usuario getUsuario(@PathParam("id") Long id){
-        return usuarioRepository.findByID(id);
-        
-    }
+     public Long excluir(@PathParam("id") Long id){
+         usuarioRepository.excluir(id);
+         return id;
+       }
+
+     @GET
+     @Path("{id}")
+     public Usuario getUsuario(@PathParam("id") Long id){
+         return usuarioRepository.findByID(id);
+
+     }
     
     @PUT
     @Path("{id}")
     public Usuario atualizar(@PathParam("id") Long id, Usuario usuario){
         return usuarioRepository.atualizar(id, usuario);
     }
+  
 }

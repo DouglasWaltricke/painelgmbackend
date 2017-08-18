@@ -22,6 +22,12 @@ import javax.ejb.Stateless;
          return em.find(Usuario.class,id);
      }
      
+     public Usuario findUser(Usuario usuario){
+         Usuario teste = em.createQuery("select u from Usuario u where u.login = :login", Usuario.class)
+                 .setParameter("login",usuario.getLogin())
+                 .getSingleResult();
+         return teste;
+     }
      public List<Usuario> findAll(){
          return em.createQuery("select u from Usuario u", Usuario.class).getResultList();
     }

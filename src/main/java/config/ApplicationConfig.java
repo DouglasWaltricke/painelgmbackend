@@ -31,8 +31,19 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(config.CrossOriginFilter.class);
+        resources.add(org.jboss.resteasy.plugins.providers.jaxb.CollectionProvider.class);
+        resources.add(org.jboss.resteasy.plugins.providers.jaxb.JAXBElementProvider.class);
+        resources.add(org.jboss.resteasy.plugins.providers.jaxb.JAXBXmlRootElementProvider.class);
+        resources.add(org.jboss.resteasy.plugins.providers.jaxb.JAXBXmlSeeAlsoProvider.class);
+        resources.add(org.jboss.resteasy.plugins.providers.jaxb.JAXBXmlTypeProvider.class);
+        resources.add(org.jboss.resteasy.plugins.providers.jaxb.MapProvider.class);
+        resources.add(org.jboss.resteasy.plugins.providers.jaxb.XmlJAXBContextFinder.class);
+        resources.add(org.jboss.resteasy.plugins.stats.RegistryStatsResource.class);
+        resources.add(painelgm.rest.DivulgacaoRestService.class);
         resources.add(painelgm.rest.EventoRestService.class);
         resources.add(painelgm.rest.ListaEventoRestService.class);
         resources.add(painelgm.rest.UsuarioRestService.class);
+        resources.add(painelgm.util.Login.class);
+        resources.add(painelgm.util.SecurityFilter.class);
     }
 }

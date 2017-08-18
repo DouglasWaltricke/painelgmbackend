@@ -21,6 +21,9 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Getter
 @Setter
@@ -42,10 +45,14 @@ public class ListaEventos implements Serializable {
             mappedBy = "listaEventos",
             orphanRemoval = true)
     private List<Evento> eventos;
+    
+    @OneToOne
+    private Usuario usuario;
 
     public void associar() {
         for (Evento evento : eventos) {
             evento.setListaEventos(this);
         }
     }
+
 }

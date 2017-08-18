@@ -26,8 +26,7 @@ public class ListaEventoRepository {
     }
 
     public List<ListaEventos> findAll() {
-        return em.createQuery("select le from ListaEventos le left join fetch le.eventos", ListaEventos.class)
-                .getResultList();
+        return em.createQuery("select le from ListaEventos le left join fetch le.eventos", ListaEventos.class).getResultList();
     }
     
     public ListaEventos excluir(Long id){

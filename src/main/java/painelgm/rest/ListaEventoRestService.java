@@ -16,6 +16,8 @@ import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import painelgm.data.UsuarioRepository;
+import painelgm.model.Usuario;
 
 @Path("/listaeventos")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -28,6 +30,10 @@ public class ListaEventoRestService {
 
     @Inject
     private ListaEventoRepository listaEventoRepository;
+    
+    @Inject
+    UsuarioRepository usuarioRepository;
+
 
     @GET
     public List<ListaEventos> listar() {
@@ -36,16 +42,18 @@ public class ListaEventoRestService {
 
     @POST
     public ListaEventos adicionar(ListaEventos listaEventos) {
-        listaEventoService.cadastrarListaEvento(listaEventos);
+        long teste = 1;
+        Usuario usuario = usuarioRepository.findByID(teste);
+        listaEventoService.cadastrarListaEvento(listaEventos,usuario);
         return listaEventos;
     }
     
     @DELETE
     @Path("{id}")
-     public Long excluir(@PathParam("id") Long id){
-         listaEventoRepository.excluir(id);
-         return id;
-       }
+    public Long excluir(@PathParam("id") Long id){
+        listaEventoRepository.excluir(id);
+        return id;
+    }
    
     @GET
     @Path("{id}")
