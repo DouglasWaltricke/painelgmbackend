@@ -35,13 +35,14 @@ public class ListaEventoRepository {
         return listaEventos;
     }
     
-    public ListaEventos atualizar(Long id, ListaEventos listaeventosAtualizada){
+    public ListaEventos atualizar(Long id, ListaEventos listaEventosAtualizada){
         ListaEventos listaEventos = findById(id);
-        listaEventos.setChecked(listaeventosAtualizada.isChecked());
-        listaEventos.setDataEvento(listaeventosAtualizada.getDataEvento());
-        listaEventos.setGameMaster(listaeventosAtualizada.getGameMaster());
-        listaEventos.associar();
+        listaEventos.setChecked(listaEventosAtualizada.isChecked());
+        listaEventos.setDataEvento(listaEventosAtualizada.getDataEvento());
+        listaEventos.setGameMaster(listaEventosAtualizada.getGameMaster());
+        listaEventosAtualizada.associar();
         
+        em.merge(listaEventos);
         return listaEventos;
     }
 }

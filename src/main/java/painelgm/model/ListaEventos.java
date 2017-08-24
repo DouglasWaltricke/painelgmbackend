@@ -55,4 +55,10 @@ public class ListaEventos implements Serializable {
         }
     }
 
+    public void atualizarAssociacao(ListaEventos listaEventosAtualizada) {
+        for (Evento evento : listaEventosAtualizada.getEventos()) {
+            evento.setListaEventos(listaEventosAtualizada);
+        }
+    }
+
 }

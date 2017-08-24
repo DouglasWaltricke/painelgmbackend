@@ -58,13 +58,13 @@ public class ListaEventoRestService {
     @GET
     @Path("{id}")
     public ListaEventos getListaEventos(@PathParam("id") Long id){
-        return listaEventoRepository.findById(id);
-        
+        return listaEventoRepository.findById(id);    
     }
     
     @PUT
     @Path("{id}")
     public ListaEventos atualizar(@PathParam("id") Long id, ListaEventos listaEventos){
+        ListaEventos cara = listaEventos;
         return listaEventoRepository.atualizar(id, listaEventos);
     }
     
