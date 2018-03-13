@@ -68,5 +68,12 @@ public class UsuarioRestService {
     public Usuario atualizar(@PathParam("id") Long id, Usuario usuario){
         return usuarioRepository.atualizar(id, usuario);
     }
+    
+    @GET
+     @Path("/topEventosGM")
+     public List<Object> topEventosGM(){
+         return usuarioRepository.topEventosGM();
+
+     }
   
 }

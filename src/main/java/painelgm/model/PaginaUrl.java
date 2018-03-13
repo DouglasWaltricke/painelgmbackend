@@ -5,44 +5,39 @@
  */
 package painelgm.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.codehaus.jackson.annotate.JsonIgnore;
-
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
+ *
  * @author goga
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
-@Table(name = "eventos", schema = "public")
-public class Evento implements Serializable {
-
+@Table(name ="paginaurl", schema ="public")
+public class PaginaUrl implements Serializable {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String player;
-    private String nome;
-    private Integer premiacao;
-    private String printUrl;
-    private String gameMaster;
-
+    
+    private String url;
+    
     @ManyToOne
     @JsonIgnore
-    private ListaEventos listaEventos;
+    private Divulgacao divulgacao;
+    
 }

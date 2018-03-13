@@ -17,9 +17,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.hibernate.engine.spi.Status;
 import painelgm.data.DivulgacaoRepository;
 import painelgm.data.UsuarioRepository;
 import painelgm.model.Divulgacao;
+import painelgm.model.Usuario;
 import painelgm.service.DivulgacaoService;
 
 /**
@@ -49,7 +51,9 @@ public class DivulgacaoRestService {
     
     @POST
     public Divulgacao adicionar(Divulgacao divulgacao){
-        return divulgacaoService.cadastrarDivulgacao(divulgacao);
+        Usuario usuario = usuarioRepository.findByID(divulgacao.codigoUsuario);
+        divulgacaoService.cadastrarDivulgacao(divulgacao,usuario);
+        return null;
     }
     
     @DELETE
@@ -70,4 +74,29 @@ public class DivulgacaoRestService {
     public Divulgacao getDivulgacao(@PathParam("id") Long id){
         return divulgacaoRepository.findById(id);
     }
+    
+    @GET
+    @Path("/findListFromUser/{codigoUsuario}")
+    public List<Divulgacao> listar(@PathParam("codigoUsuario") Long codigoUsuario){
+        Usuario usuario = usuarioRepository.findByID(codigoUsuario);
+         if(usuario.getAdministrador()){
+           return divulgacaoRepository.findAll(); 
+        } else {
+            return divulgacaoRepository.findListFromUser(usuario);
+        }
+    }
+    
+    @GET
+    @Path("/topDivulcao")
+    public List<Object> topDivulcao(){
+        return divulgacaoRepository.topDivulcao();
+    }
+    
+    @POST
+    @Path("/resetar")
+    public Status excluir(){
+        divulgacaoRepository.resetar();
+        return Status.DELETED;
+    }
 }
+

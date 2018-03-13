@@ -21,8 +21,10 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Getter
@@ -40,17 +42,21 @@ public class ListaEventos implements Serializable {
     private String gameMaster;
     private Date dataEvento;
     private boolean checked;
+    
+    @Ignore
+    public Long codigoUsuario;
 
     @OneToMany(cascade = CascadeType.ALL,
             mappedBy = "listaEventos",
-            orphanRemoval = true)
+            orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Evento> eventos;
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
 
-    public void associar() {
+    public void associar(String gameMaster) {
         for (Evento evento : eventos) {
+            evento.setGameMaster(gameMaster);
             evento.setListaEventos(this);
         }
     }

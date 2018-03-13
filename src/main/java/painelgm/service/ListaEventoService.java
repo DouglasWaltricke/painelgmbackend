@@ -17,7 +17,9 @@ public class ListaEventoService {
     
     public void cadastrarListaEvento(ListaEventos listaEvento,Usuario usuario) {
         listaEvento.setUsuario(usuario);
-        listaEvento.associar();
-        em.persist(listaEvento);
+        String gameMaster = usuario.getLogin();
+        listaEvento.setGameMaster(gameMaster);
+        listaEvento.associar(gameMaster);
+        em.merge(listaEvento);
     }
 }

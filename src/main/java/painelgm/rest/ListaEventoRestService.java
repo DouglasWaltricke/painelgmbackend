@@ -36,16 +36,28 @@ public class ListaEventoRestService {
 
 
     @GET
-    public List<ListaEventos> listar() {
-        return listaEventoRepository.findAll();
+    @Path("/findListFromUser/{codigoUsuario}")
+    public List<ListaEventos> listar(@PathParam("codigoUsuario") Long codigoUsuario) {
+        Usuario usuario = usuarioRepository.findByID(codigoUsuario);
+        if(usuario.getAdministrador() == true){
+           return listaEventoRepository.findAll(); 
+        } else {
+            return listaEventoRepository.findListFromUser(usuario);
+        }
+        
     }
 
     @POST
     public ListaEventos adicionar(ListaEventos listaEventos) {
-        long teste = 1;
-        Usuario usuario = usuarioRepository.findByID(teste);
+        Usuario usuario = usuarioRepository.findByID(listaEventos.codigoUsuario);
         listaEventoService.cadastrarListaEvento(listaEventos,usuario);
         return listaEventos;
+    }
+    
+    @PUT
+    @Path("/conferir")
+    public ListaEventos conferida(ListaEventos listaEventos){
+       return listaEventoRepository.conferida(listaEventos.getId());
     }
     
     @DELETE
@@ -64,8 +76,12 @@ public class ListaEventoRestService {
     @PUT
     @Path("{id}")
     public ListaEventos atualizar(@PathParam("id") Long id, ListaEventos listaEventos){
-        ListaEventos cara = listaEventos;
-        return listaEventoRepository.atualizar(id, listaEventos);
+        listaEventoRepository.excluir(id);
+        Usuario usuario = usuarioRepository.findByID(listaEventos.getUsuario().getId()); 
+        listaEventos.setId(null);
+        listaEventos.setUsuario(null);
+        listaEventoService.cadastrarListaEvento(listaEventos, usuario);
+        return listaEventos;
     }
     
     

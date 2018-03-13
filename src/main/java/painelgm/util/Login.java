@@ -37,18 +37,15 @@ public class Login extends HttpServlet{
     private UsuarioRepository usuarioRepository;
     
     @POST
-    public Usuario efetuarLogin(Usuario usuario, @Context HttpServletRequest servletRequest, @Context HttpServletResponse resp){
+    public Long efetuarLogin(Usuario usuario){
         Usuario usuarioLogado =  usuarioRepository.findUser(usuario);
-        if(usuarioLogado == null){
-            
-            return null;
-        }else {
-          /* HttpSession session = servletRequest.getSession();
-            session.setAttribute("userName", usuarioLogado); */
-            Cookie cookie = new Cookie("usuarioLogado", usuarioLogado.getLogin());
-            resp.addCookie(cookie);
-            return usuarioLogado;
-        }   
+ 
+        if(usuarioLogado != null){
+            Long id = usuarioLogado.getId();
+            return id;
+        } else {
+           return null;
+        }
     }
     
     

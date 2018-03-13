@@ -9,6 +9,7 @@ package painelgm.data;
  import java.util.List;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
+import painelgm.model.ListaEventos;
  import painelgm.model.Usuario;
  
  @Stateless
@@ -23,11 +24,21 @@ import javax.ejb.Stateless;
      }
      
      public Usuario findUser(Usuario usuario){
-         Usuario teste = em.createQuery("select u from Usuario u where u.login = :login", Usuario.class)
-                 .setParameter("login",usuario.getLogin())
-                 .getSingleResult();
-         return teste;
+        try{
+           Usuario teste = em.createQuery("select u from Usuario u where u.login = :login and u.senha = :senha", Usuario.class)
+                   .setParameter("login",usuario.getLogin())
+                   .setParameter("senha", usuario.getSenha())
+                   .getSingleResult();
+           if(teste != null)  {
+               return teste;
+           }
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+         } 
+        return null;
      }
+     
      public List<Usuario> findAll(){
          return em.createQuery("select u from Usuario u", Usuario.class).getResultList();
     }
@@ -50,4 +61,9 @@ import javax.ejb.Stateless;
          
        return usuario;  
      }
+     
+     public List<Object> topEventosGM(){
+         return em.createQuery("select sum(premiacao), gameMaster from Evento group by gameMaster order by sum(premiacao) desc").setMaxResults(10).getResultList();
+     }
+     
  }
